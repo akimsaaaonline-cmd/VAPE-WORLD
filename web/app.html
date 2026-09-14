@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Get the VAPE WORLD app</title>
+    <meta
+      name="description"
+      content="Download the VAPE WORLD app for Android, or the desktop app for Windows."
+    />
+    <link rel="icon" type="image/png" href="./favicon-32.png" />
+    <meta name="theme-color" content="#0E1A20" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400..700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ink: #0e1a20;
+        --paper: #f6f8f7;
+        --line: #d9e2e0;
+        --muted: #5d7078;
+        --accent: #12b886;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font: 400 16px/1.6 "DM Sans", system-ui, sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      header {
+        background: var(--ink);
+        color: #eaf3f0;
+        padding: 28px 24px;
+      }
+      .wrap { max-width: 780px; margin: 0 auto; padding: 0 24px; }
+      header .wrap { padding: 0; }
+      .brand {
+        display: flex; align-items: center; gap: 10px;
+        font-weight: 700; letter-spacing: .14em; text-transform: uppercase; font-size: 14px;
+      }
+      .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); }
+      h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.15; margin: 40px 0 8px; }
+      .sub { color: var(--muted); margin: 0 0 36px; max-width: 46ch; }
+      .card {
+        background: #fff; border: 1px solid var(--line); border-radius: 16px;
+        padding: 22px 24px; margin-bottom: 16px;
+      }
+      .card h2 { margin: 0 0 6px; font-size: 19px; }
+      .card p { margin: 0 0 16px; color: var(--muted); font-size: 15px; }
+      .btn {
+        display: inline-block; background: var(--accent); color: #03251b;
+        font-weight: 700; text-decoration: none; padding: 12px 20px; border-radius: 999px;
+      }
+      .btn:hover { background: #0fa678; }
+      .btn.ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); }
+      .btn.ghost:hover { border-color: var(--ink); }
+      .row { display: flex; flex-wrap: wrap; gap: 10px; }
+      .note { font-size: 13.5px; color: var(--muted); margin-top: 14px; }
+      footer { padding: 40px 0 60px; color: var(--muted); font-size: 14px; }
+      a { color: #0b7a5b; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="wrap">
+        <div class="brand"><span class="dot"></span> Vape World</div>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <h1>Get the app</h1>
+      <p class="sub">
+        The same shop as the website — on your phone and on your PC. 18+ only.
+      </p>
+
+      <section class="card">
+        <h2>Android</h2>
+        <p>Android 5.0 and newer. About 60 KB.</p>
+        <div class="row">
+          <a class="btn" href="./downloads/VAPE-WORLD-1.0.0.apk" download>Download APK</a>
+          <a class="btn ghost" href="./#/">Open the website</a>
+        </div>
+        <p class="note">
+          Your phone will ask permission to install apps from outside the Play Store —
+          allow it once, then open the downloaded file.
+        </p>
+      </section>
+
+      <section class="card">
+        <h2>Windows</h2>
+        <p>
+          Windows 10 and 11 (64-bit). Runs the shop on your own PC, so it keeps working
+          without internet, and can switch to the live website from the Shop menu.
+        </p>
+        <div class="row">
+          <a class="btn" href="./downloads/VAPE-WORLD-Setup-1.0.0.exe" download>Download installer</a>
+        </div>
+        <p class="note">
+          Windows shows a “Windows protected your PC” screen for apps without a paid
+          signing certificate — choose <strong>More info</strong>, then
+          <strong>Run anyway</strong>. Your first-run vendor password is under
+          <strong>Shop → Vendor login</strong>.
+        </p>
+      </section>
+
+      <section class="card">
+        <h2>Source code</h2>
+        <p>Website, shop server and both apps.</p>
+        <div class="row">
+          <a class="btn ghost" href="https://github.com/akimsaaaonline-cmd/VAPE-WORLD">
+            View on GitHub
+          </a>
+        </div>
+      </section>
+
+      <footer>© 2026 VAPE WORLD · Peshawar, Pakistan</footer>
+    </main>
+  </body>
+</html>

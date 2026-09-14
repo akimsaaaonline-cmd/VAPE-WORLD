@@ -10,3 +10,4 @@ server/data/uploads/
 .DS_Store
 web/.vercel/
 .vercel/
+downloads/*.exe
