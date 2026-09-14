@@ -1,5 +1,7 @@
 # VAPE WORLD
 
+Owner: akimsaaaonline@gmail.com
+
 Premium vapes, pod kits, e-liquids and accessories — online shop for Pakistan, plus an Android app and a Windows desktop app built from the same code.
 
 | Piece | What it is |

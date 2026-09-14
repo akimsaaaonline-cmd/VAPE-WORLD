@@ -19,6 +19,10 @@ import path from 'node:path';
 const WEB = path.dirname(new URL(import.meta.url).pathname);
 const API = (process.env.API || 'https://vapeworlds1.pplx.app/port/9000').replace(/\/+$/, '');
 const SITE = (process.env.SITE || 'https://vapeworld-store.vercel.app').replace(/\/+$/, '');
+// Shop owner. Shown in the footer and in the structured data Google reads.
+const OWNER_EMAIL = process.env.OWNER_EMAIL || 'akimsaaaonline@gmail.com';
+const OWNER_PHONE = process.env.OWNER_PHONE || '+92 371 0975847';
+const OWNER_WHATSAPP = process.env.OWNER_WHATSAPP || 'https://wa.me/923710975847';
 const TODAY = new Date().toISOString().slice(0, 10);
 
 /* ------------------------------------------------------------- fetching ---- */
@@ -158,7 +162,8 @@ ${body}
     <div>
       <strong style="color:#eaf3f0">VAPE WORLD</strong><br />
       Premium vapes, delivered across Pakistan.<br />
-      <a href="https://wa.me/923710975847">WhatsApp +92 371 0975847</a>
+      <a href="${OWNER_WHATSAPP}">WhatsApp ${esc(OWNER_PHONE)}</a><br />
+      <a href="mailto:${esc(OWNER_EMAIL)}">${esc(OWNER_EMAIL)}</a>
     </div>
     <div>
       <a href="${SITE}/#/shop">Shop</a> · <a href="${SITE}/#/track">Track order</a> ·
@@ -421,8 +426,8 @@ const storeJsonLd = {
   url: `${SITE}/`,
   image: `${SITE}/hero.jpg`,
   logo: `${SITE}/icons/icon-512.png`,
-  email: settings.contactEmail || undefined,
-  telephone: settings.contactPhone || undefined,
+  email: OWNER_EMAIL,
+  telephone: OWNER_PHONE,
   priceRange: 'Rs 500 – Rs 12,000',
   currenciesAccepted: 'PKR',
   paymentAccepted: 'EasyPaisa, Bank transfer',
@@ -433,7 +438,8 @@ const storeJsonLd = {
     addressRegion: 'Khyber Pakhtunkhwa',
     addressLocality: 'Peshawar',
   },
-  sameAs: [settings.whatsappLink].filter(Boolean),
+  sameAs: [OWNER_WHATSAPP].filter(Boolean),
+  founder: { '@type': 'Person', name: 'VAPE WORLD owner', email: OWNER_EMAIL },
 };
 
 const websiteJsonLd = {
@@ -469,6 +475,10 @@ const verify = [
 const homeTags = `<!-- seo:start -->
 <link rel="canonical" href="${SITE}/" />
 <meta name="robots" content="index, follow, max-image-preview:large" />
+<meta name="author" content="VAPE WORLD" />
+<meta name="owner" content="${esc(OWNER_EMAIL)}" />
+<meta name="reply-to" content="${esc(OWNER_EMAIL)}" />
+<meta name="contact" content="${esc(OWNER_EMAIL)}" />
 <meta name="rating" content="adult" />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="VAPE WORLD" />

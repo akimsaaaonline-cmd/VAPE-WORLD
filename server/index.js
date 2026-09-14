@@ -34,7 +34,7 @@ const STORE_FILE = path.join(DATA_DIR, 'store.json');
 const SEED_DIR = path.join(__dirname, 'data');
 const WEB_DIR = path.resolve(process.env.WEB_DIR || path.join(__dirname, '..', 'web'));
 
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'admin@vapeworld.pk';
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'akimsaaaonline@gmail.com';
 // No password is baked into this file. Set ADMIN_PASSWORD before the very first
 // run to choose one; otherwise a strong random password is generated on the
 // first start and written to ADMIN-LOGIN.txt inside the data folder.
