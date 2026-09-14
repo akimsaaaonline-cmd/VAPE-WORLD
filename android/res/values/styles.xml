@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="vw_bg">#0E1A20</color>
+    <style name="VwTheme" parent="@android:style/Theme.DeviceDefault.NoActionBar">
+        <item name="android:windowBackground">@color/vw_bg</item>
+        <item name="android:statusBarColor">@color/vw_bg</item>
+        <item name="android:navigationBarColor">@color/vw_bg</item>
+    </style>
+</resources>

@@ -1,0 +1,66 @@
+{
+  "name": "vape-world-desktop",
+  "productName": "VAPE WORLD",
+  "version": "1.0.0",
+  "description": "VAPE WORLD shop — desktop app with its own built-in shop server.",
+  "main": "main.js",
+  "author": "VAPE WORLD",
+  "license": "UNLICENSED",
+  "scripts": {
+    "start": "electron .",
+    "dist:win": "electron-builder --win nsis portable --x64"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "electron": "^32.2.7",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "pk.vapeworld.shop",
+    "productName": "VAPE WORLD",
+    "copyright": "VAPE WORLD",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "main.js",
+      "package.json",
+      "!dist/**"
+    ],
+    "extraResources": [
+      {
+        "from": "../web",
+        "to": "web",
+        "filter": ["**/*"]
+      },
+      {
+        "from": "../server",
+        "to": "server",
+        "filter": ["**/*", "!data/store.json", "!data/uploads/**"]
+      }
+    ],
+    "win": {
+      "icon": "build/icon.ico",
+      "target": [
+        { "target": "nsis", "arch": ["x64"] },
+        { "target": "portable", "arch": ["x64"] }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "VAPE WORLD",
+      "artifactName": "VAPE-WORLD-Setup-${version}.exe",
+      "uninstallDisplayName": "VAPE WORLD"
+    },
+    "portable": {
+      "artifactName": "VAPE-WORLD-Portable-${version}.exe"
+    }
+  }
+}
