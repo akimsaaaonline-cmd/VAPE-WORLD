@@ -8,3 +8,5 @@ server/data/store.json
 server/data/uploads/
 *.log
 .DS_Store
+web/.vercel/
+.vercel/
