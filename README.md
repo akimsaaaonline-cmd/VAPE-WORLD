@@ -11,8 +11,9 @@ Premium vapes, pod kits, e-liquids and accessories — online shop for Pakistan,
 
 ## Live
 
-- Website: https://vape-world.vercel.app
-- Backup website: https://vapeworlds1.pplx.app
+- Website: https://vapeworld-store.vercel.app
+- Mirror on GitHub Pages: https://akimsaaaonline-cmd.github.io/VAPE-WORLD/
+- Get the apps: https://vapeworld-store.vercel.app/app
 - Shop API: https://vapeworlds1.pplx.app/port/9000/api
 
 ## Vendor panel
@@ -57,6 +58,15 @@ ANDROID_SDK_ROOT=$HOME/android-sdk JAVA_HOME=$HOME/jdk17 ./build-apk.sh
 ```
 
 Needs Android SDK build-tools 35 + platform 35 and a JDK 17. The site address the app opens is the `SITE_URL` constant in `android/java/pk/vapeworld/shop/MainActivity.java`. The signing key is created on first build as `android/vapeworld.keystore` — keep it safe; Play Store updates must be signed with the same key.
+
+## Windows app
+
+The installer is built from this repository and handed out directly by the shop
+owner — it is around 85 MB, which is more than a free static host will serve. Ask
+for `VAPE-WORLD-Setup-1.0.0.exe`, or build your own copy in two commands below.
+
+Windows shows a "Windows protected your PC" screen for any app without a paid
+signing certificate: choose **More info**, then **Run anyway**.
 
 ## Build the desktop app
 
