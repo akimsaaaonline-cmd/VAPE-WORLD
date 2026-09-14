@@ -15,7 +15,7 @@ const net = require('net');
 
 const LOCAL_PORT = 9017;
 const LOCAL_URL = `http://127.0.0.1:${LOCAL_PORT}/`;
-const ONLINE_URL = 'https://vapeworlds1.pplx.app/#/';
+const ONLINE_URL = 'https://vapeworld-store.vercel.app/#/';
 
 let mainWindow = null;
 let serverProcess = null;
@@ -93,6 +93,26 @@ function buildMenu() {
         {
           label: 'Open shop data folder',
           click: () => shell.openPath(path.join(app.getPath('userData'), 'shop-data')),
+        },
+        {
+          label: 'Vendor login',
+          click: () => {
+            const note = path.join(app.getPath('userData'), 'shop-data', 'ADMIN-LOGIN.txt');
+            let detail;
+            try {
+              detail = fs.readFileSync(note, 'utf8');
+            } catch (e) {
+              detail =
+                'The first-time login file is gone, which normally means the\n' +
+                'password has already been changed from the vendor panel.';
+            }
+            dialog.showMessageBox(mainWindow, {
+              type: 'info',
+              title: 'Vendor login',
+              message: 'Vendor panel login for this PC',
+              detail,
+            });
+          },
         },
         { type: 'separator' },
         { role: 'quit' },

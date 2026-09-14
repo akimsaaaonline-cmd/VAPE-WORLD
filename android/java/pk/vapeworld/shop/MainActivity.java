@@ -33,7 +33,7 @@ import android.widget.ProgressBar;
 public class MainActivity extends Activity {
 
     /** Live shop. Change this one line to point the app at another host. */
-    private static final String SITE_URL = "https://vapeworlds1.pplx.app/#/";
+    private static final String SITE_URL = "https://vapeworld-store.vercel.app/#/";
 
     private static final int FILE_PICKER_REQUEST = 1001;
 

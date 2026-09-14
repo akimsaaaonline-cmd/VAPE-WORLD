@@ -31,10 +31,10 @@ npm start                     # http://0.0.0.0:9000
 | `DATA_DIR` | `./data` | JSON store, uploads and backups live here |
 | `WEB_DIR` | `../web` | static frontend served at `/` with SPA fallback (set empty to disable) |
 | `ADMIN_EMAIL` | `admin@vapeworld.pk` | seed admin login (only used on first seed) |
-| `ADMIN_PASSWORD` | `VapeWorld@2026` | seed admin password (only used on first seed) |
+| `ADMIN_PASSWORD` | random | vendor password, used only when the shop data is created. Left unset, a random one is generated and written to `DATA_DIR/ADMIN-LOGIN.txt` |
 | `SITE_URL` | settings `siteDomain` | base URL used in robots.txt / sitemap.xml |
 
-**Default admin credentials: `admin@vapeworld.pk` / `VapeWorld@2026`** — sign in from the normal
+**Vendor login: `admin@vapeworld.pk` and the password from `DATA_DIR/ADMIN-LOGIN.txt`** (or whatever `ADMIN_PASSWORD` was set to on the first run) — sign in from the normal
 storefront sign-in form (`/#/signin`); an admin login redirects to `/#/admin`. There is no separate
 admin login page, exactly as the bundle expects. Change them from *Vendor panel → Login details*
 (`PATCH /api/admin/account`).

@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
+# Start the server with the same ADMIN_PASSWORD, e.g.
+#   ADMIN_PASSWORD=testpass123 DATA_DIR=/tmp/vwtest PORT=9100 node index.js
+#   ADMIN_PASSWORD=testpass123 BASE=http://localhost:9100 bash test-api.sh
 # End-to-end smoke test for the VAPE WORLD backend.
 # Usage: BASE=http://localhost:9100 ./test-api.sh
+: "${ADMIN_PASSWORD:?set ADMIN_PASSWORD to the value the server was started with}"
 set -uo pipefail
 BASE="${BASE:-http://localhost:9100}"
 PASS=0; FAIL=0
@@ -60,7 +64,7 @@ echo "== admin auth =="
 code=$(req GET /api/admin/stats); chk "admin stats without token -> 401" "$([ "$code" = 401 ] && echo 1 || echo 0)" "$code"
 code=$(req POST /api/auth/login '{"email":"admin@vapeworld.pk","password":"wrong"}')
 chk "bad admin password -> 401" "$([ "$code" = 401 ] && echo 1 || echo 0)" "$code"
-code=$(req POST /api/auth/login '{"email":"admin@vapeworld.pk","password":"VapeWorld@2026"}')
+code=$(req POST /api/auth/login '{"email":"admin@vapeworld.pk","password":"'"$ADMIN_PASSWORD"'"}')
 chk "admin login 200" "$([ "$code" = 200 ] && echo 1 || echo 0)" "$code"
 chk "  role/token/admin present" "$(jq_has "$TMP/out" "d['role']=='admin' and bool(d['token']) and d['admin']['email']=='admin@vapeworld.pk'")"
 ADMIN=$(python3 -c "import json;print(json.load(open('$TMP/out'))['token'])")
@@ -213,13 +217,13 @@ code=$(req PATCH /api/admin/account '{"name":"Ahmar Jan","email":"admin@vapeworl
 chk "PATCH account name only" "$(jq_has "$TMP/out" "d['name']=='Ahmar Jan' and d['email']=='admin@vapeworld.pk'")"
 code=$(req PATCH /api/admin/account '{"name":"Ahmar Jan","email":"admin@vapeworld.pk","currentPassword":"nope","newPassword":"newpass123"}' -H "$AH")
 chk "wrong current password -> 400" "$([ "$code" = 400 ] && echo 1 || echo 0)" "$code"
-code=$(req PATCH /api/admin/account '{"name":"Ahmar Jan","email":"admin@vapeworld.pk","currentPassword":"VapeWorld@2026","newPassword":"newpass123"}' -H "$AH")
+code=$(req PATCH /api/admin/account '{"name":"Ahmar Jan","email":"admin@vapeworld.pk","currentPassword":"'"$ADMIN_PASSWORD"'","newPassword":"newpass123"}' -H "$AH")
 chk "password change 200" "$([ "$code" = 200 ] && echo 1 || echo 0)" "$code"
 code=$(req POST /api/auth/login '{"email":"admin@vapeworld.pk","password":"newpass123"}'); chk "login with new password" "$([ "$code" = 200 ] && echo 1 || echo 0)" "$code"
 ADMIN=$(python3 -c "import json;print(json.load(open('$TMP/out'))['token'])"); AH="x-admin-token: $ADMIN"
-code=$(req PATCH /api/admin/account '{"name":"Ahmar Jan","email":"admin@vapeworld.pk","currentPassword":"newpass123","newPassword":"VapeWorld@2026"}' -H "$AH")
+code=$(req PATCH /api/admin/account '{"name":"Ahmar Jan","email":"admin@vapeworld.pk","currentPassword":"newpass123","newPassword":"'"$ADMIN_PASSWORD"'"}' -H "$AH")
 chk "password restored" "$([ "$code" = 200 ] && echo 1 || echo 0)" "$code"
-code=$(req POST /api/auth/login '{"email":"admin@vapeworld.pk","password":"VapeWorld@2026"}')
+code=$(req POST /api/auth/login '{"email":"admin@vapeworld.pk","password":"'"$ADMIN_PASSWORD"'"}')
 ADMIN=$(python3 -c "import json;print(json.load(open('$TMP/out'))['token'])"); AH="x-admin-token: $ADMIN"
 
 code=$(req GET /api/admin/team '' -H "$AH"); chk "GET /api/admin/team" "$(jq_has "$TMP/out" "d[0]['isYou'] is True")"

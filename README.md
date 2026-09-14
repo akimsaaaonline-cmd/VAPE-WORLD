@@ -19,7 +19,7 @@ Premium vapes, pod kits, e-liquids and accessories — online shop for Pakistan,
 
 Sign in at `/#/signin` with the shop owner account, then the panel is at `/#/admin`.
 
-Default login on a fresh install: `admin@vapeworld.pk` / `VapeWorld@2026` — change the password from the panel's "Login details" tab right after the first sign-in. Override the defaults with the `ADMIN_EMAIL` / `ADMIN_PASSWORD` environment variables before first run.
+On a fresh install the shop creates the vendor account `admin@vapeworld.pk` with a **random** password and writes it to `ADMIN-LOGIN.txt` inside the data folder (the desktop app shows it under Shop → Vendor login). Change it from the panel's "Login details" tab, then delete that file. To pick your own from the start, set `ADMIN_EMAIL` / `ADMIN_PASSWORD` before the first run.
 
 ## Run the whole shop on one machine
 

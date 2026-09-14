@@ -35,7 +35,10 @@ const SEED_DIR = path.join(__dirname, 'data');
 const WEB_DIR = path.resolve(process.env.WEB_DIR || path.join(__dirname, '..', 'web'));
 
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'admin@vapeworld.pk';
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'VapeWorld@2026';
+// No password is baked into this file. Set ADMIN_PASSWORD before the very first
+// run to choose one; otherwise a strong random password is generated on the
+// first start and written to ADMIN-LOGIN.txt inside the data folder.
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || '';
 
 for (const dir of [DATA_DIR, UPLOAD_DIR, BACKUP_DIR]) fs.mkdirSync(dir, { recursive: true });
 
@@ -241,14 +244,33 @@ function ensureAdmin() {
   if (!Array.isArray(db.admins)) db.admins = [];
   if (db.admins.length === 0) {
     const id = nextId('admin');
+    const generated = !ADMIN_PASSWORD;
+    const password = ADMIN_PASSWORD || `vw-${crypto.randomBytes(9).toString('base64url')}`;
     db.admins.push({
       id,
       email: ADMIN_EMAIL.toLowerCase(),
       name: 'Store Vendor',
       role: 'owner',
-      password: hashPassword(ADMIN_PASSWORD),
+      password: hashPassword(password),
     });
-    console.log(`[auth] created default admin ${ADMIN_EMAIL}`);
+    if (generated) {
+      const note = path.join(DATA_DIR, 'ADMIN-LOGIN.txt');
+      const body =
+        'VAPE WORLD — vendor panel login (created on first start)\n\n' +
+        `email:    ${ADMIN_EMAIL}\n` +
+        `password: ${password}\n\n` +
+        'Change this password from the panel (Login details tab) and then delete\n' +
+        'this file. Anyone who can read it can manage the shop.\n';
+      try {
+        fs.writeFileSync(note, body, { mode: 0o600 });
+      } catch (e) {
+        /* the console line below is still shown */
+      }
+      console.log(`[auth] created vendor account ${ADMIN_EMAIL}`);
+      console.log(`[auth] first-time password: ${password}  (also saved in ${note})`);
+    } else {
+      console.log(`[auth] created vendor account ${ADMIN_EMAIL} with ADMIN_PASSWORD`);
+    }
   }
 }
 
