@@ -1,5 +1,5 @@
 /* VAPE WORLD service worker — offline shell + cache-first static assets. */
-const CACHE = 'vapeworld-v2';
+const CACHE = 'vapeworld-v3';
 const SHELL = ['./', './index.html', './manifest.webmanifest', './icons/icon-192.png', './icons/icon-512.png'];
 
 self.addEventListener('install', (event) => {
@@ -28,11 +28,17 @@ self.addEventListener('fetch', (event) => {
 
   // Navigations: network first, fall back to the cached shell when offline.
   if (req.mode === 'navigate') {
+    // Only the app shell itself refreshes the offline copy. The static
+    // search-engine pages under /p/ and /c/ are separate documents and must
+    // never overwrite it.
+    const isShell = url.pathname === '/' || url.pathname.endsWith('/index.html');
     event.respondWith(
       fetch(req)
         .then((res) => {
-          const copy = res.clone();
-          caches.open(CACHE).then((c) => c.put('./index.html', copy)).catch(() => undefined);
+          if (isShell) {
+            const copy = res.clone();
+            caches.open(CACHE).then((c) => c.put('./index.html', copy)).catch(() => undefined);
+          }
           return res;
         })
         .catch(() => caches.match('./index.html').then((r) => r || Response.error()))

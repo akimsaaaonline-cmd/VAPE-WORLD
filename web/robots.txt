@@ -1,0 +1,6 @@
+# VAPE WORLD — https://github.com/akimsaaaonline-cmd/VAPE-WORLD
+User-agent: *
+Allow: /
+Disallow: /downloads/
+
+Sitemap: https://vapeworld-store.vercel.app/sitemap.xml

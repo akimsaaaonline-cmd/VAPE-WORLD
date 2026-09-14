@@ -1771,6 +1771,30 @@ if (fs.existsSync(WEB_DIR)) {
   });
 
   app.use(express.static(WEB_DIR, { index: false, maxAge: '1h' }));
+
+  // Plain HTML pages built by web/build-seo.mjs, one per product and category.
+  // They live in their own folders, so a directory request has to be mapped to
+  // the index.html inside it before the single-page fallback below takes over.
+  app.get(/^\/(p|c)\/([A-Za-z0-9._-]+)\/?$/, (req, res, next) => {
+    const page = path.join(WEB_DIR, req.params[0], req.params[1], 'index.html');
+    if (!page.startsWith(WEB_DIR) || !fs.existsSync(page)) return next();
+    return res.sendFile(page);
+  });
+
+  for (const file of ['sitemap.xml', 'robots.txt']) {
+    app.get(`/${file}`, (req, res, next) => {
+      const page = path.join(WEB_DIR, file);
+      if (!fs.existsSync(page)) return next();
+      return res.sendFile(page);
+    });
+  }
+
+  app.get('/app', (req, res, next) => {
+    const page = path.join(WEB_DIR, 'app.html');
+    if (!fs.existsSync(page)) return next();
+    return res.sendFile(page);
+  });
+
   app.get(/.*/, (req, res, next) => {
     if (req.method !== 'GET') return next();
     const index = path.join(WEB_DIR, 'index.html');

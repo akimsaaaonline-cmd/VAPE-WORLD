@@ -11,3 +11,4 @@ server/data/uploads/
 web/.vercel/
 .vercel/
 downloads/*.exe
+web/downloads/*.exe

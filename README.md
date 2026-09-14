@@ -81,3 +81,22 @@ The desktop app starts the bundled shop server on a local port and opens the sho
 ## API
 
 Full endpoint reference, auth headers and data shapes: [`server/API-NOTES.md`](server/API-NOTES.md).
+
+## Search engines (SEO)
+
+The shop itself is a single-page app behind `#/` routes, which Google cannot
+index well. `web/build-seo.mjs` reads the live API and writes a plain HTML page
+for every product (`/p/<slug>/`) and category (`/c/<slug>/`), plus `sitemap.xml`
+and `robots.txt`, and injects Open Graph and schema.org data into the app's own
+pages. Each generated page links into the app, so shoppers land on the real shop.
+
+Run it after adding or renaming products, then redeploy:
+
+```bash
+cd web
+node build-seo.mjs          # live API -> https://vapeworld-store.vercel.app
+API=http://localhost:9000 SITE=https://your-site node build-seo.mjs
+```
+
+It also pings IndexNow, so Bing, Yandex, Naver and Seznam pick up changes within
+minutes. Google needs a one-off sitemap submission in Search Console.
